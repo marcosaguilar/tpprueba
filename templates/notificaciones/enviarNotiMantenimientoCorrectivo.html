@@ -1,0 +1,41 @@
+{% extends 'home.html' %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block fondo %}
+{% endblock %}
+{% block body %}
+    <div class="col-md-4 col-md-offset-4" style="margin-top: 3%">
+        <div class="panel panel-default"  >
+            <div class="panel-heading">Notificar Mantenimiento Correctivo</div>
+            <div class="panel-body  ">
+                 <form action="{% url 'enviarNotificacionMantenimientoCorrectivo' %}" method="POST">
+                 <input type = "hidden" name="codigo" value={{ recurso.codigo }}>
+                {% csrf_token %}
+                {% if mensaje %}
+                    {{ mensaje }}<br><br>
+                    <input type="button" class="btn btn-default "  value="Volver"  onclick="location.href='{% url 'notificarMantenimentoCorrectivo' %}'"/>
+                {% else %}
+                        <p align="center"> <strong>Recurso</strong></p>
+                        <strong>Tipo: </strong>
+                       {{ recurso.tipo.nombre }}<br>
+                        <strong>Codigo: </strong>
+                        {{ recurso.codigo }}<br>
+                        <strong>Estado: </strong>
+                        {% if recurso.disponible %}
+                            Disponible
+                         {% else %}
+                            No Disponible
+                         {% endif %}<br><br>
+                    Detalle:
+                    <input type="text" name="detalle"><br><br>
+                    {% buttons %}
+                            <button type="submit" name= "notificar" class="btn btn-default">Notificar</button>
+                        <input type="button" class="btn btn-default "  value="Cancelar"  onclick="location.href='{% url 'notificarMantenimentoCorrectivo' %}'"/>
+                    {% endbuttons %}
+                {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

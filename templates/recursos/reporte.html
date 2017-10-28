@@ -1,0 +1,49 @@
+{% extends 'home.html' %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block body %}
+<div class = "col-md-10  col-md-offset-1" style="margin-top: 2%; margin-bottom: 2%;">
+    <form action="" method="POST" class="form-inline" >
+        {% csrf_token %}
+        {% bootstrap_form form%}
+        {% buttons %}
+            <input type="submit" class="btn btn-default "  value="Ir" />
+        {% endbuttons %}
+    </form>
+</div>
+<div class="col-md-10 col-md-offset-1" >
+    <div class="panel panel-default">
+            <div class="panel-heading">Reporte de Recursos</div>
+        <div class="panel-body">
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th><strong>Tipo</strong></th>
+                    <th>Codigo</th>
+                    <th>Disponibilidad</th>
+                    <th>Responsable</th>
+                    <th>Descripcion</th>
+                </tr>
+                </thead>
+            <tbody>
+                {% for objeto in object_list %}
+                    <tr>
+                        <td>{{ objeto.tipo.nombre}}</td>
+                        <td> {{ objeto.codigo }} </td>
+                        <td>{% if objeto.disponible %}
+                                Disponible
+                            {% else %}
+                                No Disponible
+                            {% endif %}
+                        </td>
+                        <td> {{ objeto.administrador }} </td>
+                        <td> {{ objeto.caracteristica }} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+ </div>
+{% endblock %}

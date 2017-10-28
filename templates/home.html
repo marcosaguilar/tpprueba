@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load rol_tag%}
+{% block title %}SGR - Sistema de Administracion de Recursos{% endblock %}
+{% block opciones %}
+
+    {% if user.is_authenticated %}
+        {% if user|has_group:"Solicitante" %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/admin/reservas/mireserva" style="height: 26px;width: 170px;">Consultar Reservas</a></li>
+                     <li><a href="{% url 'ReservaDisponibilidad' %}" style="height: 26px;width: 200px;">Reserva s/ Disponibilidad</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recursos <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'consultarRecursos' %}" style="height: 26px;width: 170px;">Consultar Recursos</a></li>
+                </ul>
+            </li>
+
+        {% elif user|has_group:"Administrador General" or user.is_superuser%}
+            <li><a href="/admin">Administracion</a> </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recursos <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'consultarRecursos' %}" style="height: 26px;width: 170px;">Consultar Recursos</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Mantenimiento</a> </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notificaciones <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'listarNotificaciones' %}" style="height: 26px;width: 200px;">Configurar Notificaciones</a></li>
+                    <li><a href="{% url 'notEquipAveriado' %}" style="height: 26px;width: 200px;">Not. Equipo Averiado</a></li>
+                    <li><a href="{% url 'notificarMantenimentoCorrectivo' %}" style="height: 26px;width: 200px;">Not. Mant. Correctivo</a></li>
+                </ul>
+            </li>
+        {% elif user|has_group:"Administrador de Recursos"%}
+            <li><a href="/admin">Administracion de Recursos</a> </li>
+           <li class="dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recursos <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'consultarRecursos' %}" style="height: 26px;width: 200px;">Consultar Recursos</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Reserva</a> </li>
+            <li><a href="#">Mantenimiento</a> </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notificaciones <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'notEquipAveriado' %}" style="height: 26px;width: 200px;">Notificar Equipo Averiado</a></li>
+                </ul>
+            </li>
+        {% elif user|has_group:"Administrador de Reservas"%}
+            <li><a href="/admin/reservas/controlreserva/">Administracion de Reservas</a> </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notificaciones <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'notificarMantenimentoCorrectivo' %}" style="height: 26px;width: 200px;">Not. Mant. Correctivo</a></li>
+                </ul>
+            </li>
+        {% endif %}
+
+    {% endif %}
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Portal Publico<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'reporte_recursos' %}" style="height: 26px;width: 200px;">Reporte de Recursos</a></li>
+            <li><a href="{% url 'reporte_reservas' %}" style="height: 26px;width: 200px;">Reporte de Reservas</a></li>
+            <li><a href="{% url 'DashboardFH' %}" style="height: 26px;width: 200px;">Dashboard Franja Horaria</a></li>
+        </ul>
+        </ul>
+
+    </li>
+{% endblock %}
+
+{% block opcionDerecha %}
+    {% if user.is_authenticated %}
+        <li><p class="navbar-text">Bienvenido/a <strong>{{ user.username }}</strong></p></li>
+        <li><a href="{% url 'password_change' %}">Cambiar Contraseña</a> </li>
+        <li><a href="{% url  'logout' %}">Cerrar Sesion</a> </li>
+{% else%}
+    <li><a href="{% url  'login' %}">Iniciar Sesion</a></li>
+    <li><a href="{% url  'registro' %}">Registrarse</a></li>
+    {% endif %}
+{% endblock %}
+{% block body %}{% endblock %}
