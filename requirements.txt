@@ -21,7 +21,7 @@ louis==2.6.4
 lutris==0.4.4.1
 lxml==3.5.0
 Magic-file-extensions==0.2
-Mako==1.0.3
+Mako==1.2.2
 MarkupSafe==0.23
 oauthlib==1.0.3
 onboard==1.2.0
